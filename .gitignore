@@ -23,3 +23,5 @@ run/
 build/
 /run/logs/
 .gradle/
+
+/bin
