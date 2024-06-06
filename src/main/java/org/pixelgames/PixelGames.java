@@ -3,22 +3,11 @@ package org.pixelgames;
 import com.mojang.logging.LogUtils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
-import net.minecraft.core.registries.Registries;
+import net.minecraft.network.chat.ClickEvent;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.food.FoodProperties;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.CreativeModeTabs;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.level.material.MapColor;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.event.ServerChatEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -29,19 +18,13 @@ import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
-import org.apache.logging.log4j.core.jmx.Server;
-import org.pixelgames.Minigame.ChatListener;
-import org.pixelgames.Minigame.MinigameManager;
-import org.pixelgames.Minigame.MinigameUtil;
-import org.pixelgames.Minigame.Trivia.Trivia;
-import org.pixelgames.Minigame.Trivia.TriviaLogic;
+import org.pixelgames.Minigames.ChatGames.ChatGameManager;
+import org.pixelgames.Minigames.ChatGames.ChatGamesUtil;
+import org.pixelgames.Minigames.ChatGames.ChatListener;
+import org.pixelgames.Minigames.ChatGames.Games.Unscramble;
 import org.slf4j.Logger;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -76,24 +59,16 @@ public class PixelGames {
                 config.createNewFile();
             }
 
-            File modFolder = new File("mods/PixelGames");
-            if(!modFolder.exists()) {
-                modFolder.mkdirs();
-            }
-
-            File trivia = new File("mods/PixelGames/trivia.yaml");
-            if(!trivia.exists()) {
-                trivia.createNewFile();
-            }
-
         } catch (Exception ignore) {}
     }
 
     // You can use SubscribeEvent and let the Event Bus discover methods to call
     @SubscribeEvent
-    public void onServerStarting(ServerStartingEvent event) throws FileNotFoundException {
-        LOGGER.info("[PixelGames] Thanks for installing PixelGames, please see to config files to adjust preferences");
-        MinigameManager.MinigamePicker(event.getServer());
+    public void onServerStarting(ServerStartingEvent event) throws IOException {
+        LOGGER.info("[PixelGames] Thanks for installing PixelGames, please see to config/PixelGames to adjust preferences");
+        Unscramble.populateList();
+        ChatGameManager.MinigamePicker(event.getServer());
+
     }
 
     @SubscribeEvent
@@ -101,9 +76,9 @@ public class PixelGames {
         Boolean isMonitoring = ChatListener.isMonitoringChat();
         if (isMonitoring) {
             String message = event.getMessage().getString().toLowerCase();
-            message = MinigameUtil.isValidAnswer(message);
+            message = ChatGamesUtil.isValidAnswer(message);
 
-            if (message.contains(ChatListener.getToMatch())) {
+            if (message.matches(ChatListener.getToMatch())) {
                 ChatListener.stopChatMonitoring();
                 // Perform any additional actions after matching string is found
                 System.out.println("[PixelGames] Answer found, chat monitoring stopped.");
@@ -118,10 +93,11 @@ public class PixelGames {
                 executorService.schedule(() -> {
                     server.getCommands().performPrefixedCommand(server.createCommandSourceStack(), "tellraw @a " + winnerMessage);
                     executorService.shutdown();
-                }, 5, TimeUnit.MILLISECONDS);
+                }, 50, TimeUnit.MILLISECONDS);
 
             }
         }
+
     }
 
     // You can use EventBusSubscriber to automatically register all static methods in the class annotated with @SubscribeEvent
