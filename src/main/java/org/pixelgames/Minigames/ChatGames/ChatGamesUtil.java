@@ -11,15 +11,22 @@ import org.pixelgames.Minigames.ChatGames.Games.Unscramble;
 
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 public class ChatGamesUtil {
 
     private static int sequence = 0;
 
+    private static String latestMinigame = "";
+
     public static void getRandomMinigame(ArrayList<Integer> minigames) {
         Random random = new Random();
         int number = random.nextInt(minigames.size());
         ChatGamesUtil.runMinigame(number);
+        ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
+        executorService.schedule(ChatGamesUtil::stopMinigame, 100, TimeUnit.SECONDS);
     }
 
     public static void getSequentialMinigame(ArrayList<Integer> minigames) {
@@ -30,6 +37,41 @@ public class ChatGamesUtil {
 
         if(sequence == minigames.size()) {
             sequence = 0;
+        }
+    }
+
+    public static void stopMinigame() {
+        MinecraftServer server = ChatListener.getServer();
+        switch (latestMinigame) {
+            case "Trivia":
+                ChatListener.stopChatMonitoring();
+                try {
+                    Component component = Component.literal("[").withStyle(ChatFormatting.YELLOW).withStyle(ChatFormatting.BOLD);
+                    component = component.copy().append(Component.literal("ChatGames").withStyle(ChatFormatting.GOLD).withStyle(ChatFormatting.BOLD));
+                    component = component.copy().append(Component.literal("]").withStyle(ChatFormatting.YELLOW).withStyle(ChatFormatting.BOLD));
+                    component = component.copy().append(Component.literal("No one guessed trivia in time the answer was ").withStyle(ChatFormatting.GREEN).withStyle(ChatFormatting.BOLD));
+                    component = component.copy().append(Component.literal(Trivia.getInstance().getAnswer()).withStyle(ChatFormatting.GREEN).withStyle(ChatFormatting.BOLD));
+                    String message = Component.Serializer.toJson(component);
+                    server.getCommands().performPrefixedCommand(server.createCommandSourceStack(), "tellraw @a " + message);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                ChatListener.stopChatMonitoring();
+                break;
+            case "Scramble":
+                try {
+                    Component component = Component.literal("[").withStyle(ChatFormatting.YELLOW).withStyle(ChatFormatting.BOLD);
+                    component = component.copy().append(Component.literal("ChatGames").withStyle(ChatFormatting.GOLD).withStyle(ChatFormatting.BOLD));
+                    component = component.copy().append(Component.literal("]").withStyle(ChatFormatting.YELLOW).withStyle(ChatFormatting.BOLD));
+                    component = component.copy().append(Component.literal("No one guessed the scramble in time the answer was ").withStyle(ChatFormatting.GREEN).withStyle(ChatFormatting.BOLD));
+                    component = component.copy().append(Component.literal(Unscramble.getInstance().getUnscrambledWord()).withStyle(ChatFormatting.GREEN).withStyle(ChatFormatting.BOLD));
+                    String message = Component.Serializer.toJson(component);
+                    server.getCommands().performPrefixedCommand(server.createCommandSourceStack(), "tellraw @a " + message);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                ChatListener.stopChatMonitoring();
+                break;
         }
     }
 
@@ -49,6 +91,7 @@ public class ChatGamesUtil {
                     LogUtils.getLogger().info("[PixelGames] Trivia Answer is " + Trivia.getInstance().getAnswer());
                     ChatListener.setToMatch(Trivia.getInstance().getAnswer());
                     ChatListener.startChatMonitoring();
+                    latestMinigame = "Trivia";
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -69,6 +112,7 @@ public class ChatGamesUtil {
                     LogUtils.getLogger().info("[PixelGames] Scramble Answer is " + Unscramble.getInstance().getUnscrambledWord().toLowerCase());
                     ChatListener.setToMatch(Unscramble.getInstance().getUnscrambledWord().toLowerCase());
                     ChatListener.startChatMonitoring();
+                    latestMinigame = "Scramble";
 
                 } catch (Exception e) {
                     e.printStackTrace();

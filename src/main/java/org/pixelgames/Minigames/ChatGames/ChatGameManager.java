@@ -54,7 +54,7 @@ public class ChatGameManager {
             }
 
         };
-        executorService.scheduleAtFixedRate(task, 15, 15, TimeUnit.SECONDS);
+        executorService.scheduleAtFixedRate(task, 15, 300, TimeUnit.SECONDS);
 
     }
 
