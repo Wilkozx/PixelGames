@@ -21,6 +21,7 @@ import org.pixelgames.Minigames.ChatGames.ChatGameManager;
 import org.pixelgames.Minigames.ChatGames.ChatGamesUtil;
 import org.pixelgames.Minigames.ChatGames.ChatListener;
 import org.pixelgames.Minigames.ChatGames.Games.Unscramble;
+import org.pixelgames.Minigames.ChatGames.MessageWrapper;
 import org.slf4j.Logger;
 
 import java.io.File;
@@ -84,10 +85,12 @@ public class PixelGames {
 
                 MinecraftServer server = ChatListener.getServer();
                 System.out.println("[PixelGames] " + event.getUsername() + " has guessed the correct answer");
-                Component component = Component.literal(event.getUsername()).withStyle(ChatFormatting.YELLOW).withStyle(ChatFormatting.BOLD);
-                component = component.copy().append(Component.literal(" has guessed the correct answer!").withStyle(ChatFormatting.GREEN).withStyle(ChatFormatting.BOLD));
 
+                MessageWrapper messageWrapper = new MessageWrapper();
+                Component component = messageWrapper.getMessagePrefix();
+                component = component.copy().append(messageWrapper.getWinnerResponse(event.getUsername()));
                 String winnerMessage = Component.Serializer.toJson(component);
+
                 ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
                 executorService.schedule(() -> {
                     server.getCommands().performPrefixedCommand(server.createCommandSourceStack(), "tellraw @a " + winnerMessage);

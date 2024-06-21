@@ -46,12 +46,13 @@ public class ChatGamesUtil {
             case "Trivia":
                 ChatListener.stopChatMonitoring();
                 try {
-                    Component component = Component.literal("[").withStyle(ChatFormatting.YELLOW).withStyle(ChatFormatting.BOLD);
-                    component = component.copy().append(Component.literal("ChatGames").withStyle(ChatFormatting.GOLD).withStyle(ChatFormatting.BOLD));
-                    component = component.copy().append(Component.literal("]").withStyle(ChatFormatting.YELLOW).withStyle(ChatFormatting.BOLD));
-                    component = component.copy().append(Component.literal("No one guessed trivia in time the answer was ").withStyle(ChatFormatting.GREEN).withStyle(ChatFormatting.BOLD));
-                    component = component.copy().append(Component.literal(Trivia.getInstance().getAnswer()).withStyle(ChatFormatting.GREEN).withStyle(ChatFormatting.BOLD));
+                    MessageWrapper messageWrapper = new MessageWrapper();
+                    Component component = messageWrapper.getMessagePrefix();
+                    component = component.copy().append(messageWrapper.getUnfortunateResponse());
+                    component = component.copy().append(messageWrapper.getAnswerResposne(Trivia.getInstance().getAnswer()));
                     String message = Component.Serializer.toJson(component);
+                    System.out.println(message);
+
                     server.getCommands().performPrefixedCommand(server.createCommandSourceStack(), "tellraw @a " + message);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -60,12 +61,13 @@ public class ChatGamesUtil {
                 break;
             case "Scramble":
                 try {
-                    Component component = Component.literal("[").withStyle(ChatFormatting.YELLOW).withStyle(ChatFormatting.BOLD);
-                    component = component.copy().append(Component.literal("ChatGames").withStyle(ChatFormatting.GOLD).withStyle(ChatFormatting.BOLD));
-                    component = component.copy().append(Component.literal("]").withStyle(ChatFormatting.YELLOW).withStyle(ChatFormatting.BOLD));
-                    component = component.copy().append(Component.literal("No one guessed the scramble in time the answer was ").withStyle(ChatFormatting.GREEN).withStyle(ChatFormatting.BOLD));
-                    component = component.copy().append(Component.literal(Unscramble.getInstance().getUnscrambledWord()).withStyle(ChatFormatting.GREEN).withStyle(ChatFormatting.BOLD));
+                    MessageWrapper messageWrapper = new MessageWrapper();
+                    Component component = messageWrapper.getMessagePrefix();
+                    component = component.copy().append(messageWrapper.getUnfortunateResponse());
+                    component = component.copy().append(messageWrapper.getAnswerResposne(Unscramble.getInstance().getUnscrambledWord()));
                     String message = Component.Serializer.toJson(component);
+                    System.out.println(message);
+
                     server.getCommands().performPrefixedCommand(server.createCommandSourceStack(), "tellraw @a " + message);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -80,9 +82,8 @@ public class ChatGamesUtil {
         switch (number) {
             case 0:
                 try {
-                    Component component = Component.literal("[").withStyle(ChatFormatting.YELLOW).withStyle(ChatFormatting.BOLD);
-                    component = component.copy().append(Component.literal("ChatGames").withStyle(ChatFormatting.GOLD).withStyle(ChatFormatting.BOLD));
-                    component = component.copy().append(Component.literal("]").withStyle(ChatFormatting.YELLOW).withStyle(ChatFormatting.BOLD));
+                    MessageWrapper messageWrapper = new MessageWrapper();
+                    Component component = messageWrapper.getMessagePrefix();
                     component = component.copy().append(Component.literal(Trivia.getRandomTrivia()).withStyle(ChatFormatting.GREEN).withStyle(ChatFormatting.BOLD));
                     String message = Component.Serializer.toJson(component);
                     server.getCommands().performPrefixedCommand(server.createCommandSourceStack(), "tellraw @a " + message);
@@ -100,10 +101,9 @@ public class ChatGamesUtil {
             case 1:
                 try {
                     Unscramble.getInstance().shuffleScramble();
-                    Component component = Component.literal("[").withStyle(ChatFormatting.YELLOW).withStyle(ChatFormatting.BOLD);
-                    component = component.copy().append(Component.literal("ChatGames").withStyle(ChatFormatting.GOLD).withStyle(ChatFormatting.BOLD));
-                    component = component.copy().append(Component.literal("]").withStyle(ChatFormatting.YELLOW).withStyle(ChatFormatting.BOLD));
-                    component = component.copy().append(Component.literal(" Unscramble the word:").withStyle(ChatFormatting.GREEN).withStyle(ChatFormatting.BOLD));
+                    MessageWrapper messageWrapper = new MessageWrapper();
+                    Component component = messageWrapper.getMessagePrefix();
+                    component = component.copy().append(Component.literal("Unscramble the word:").withStyle(ChatFormatting.GREEN).withStyle(ChatFormatting.BOLD));
                     component = component.copy().append(Component.literal(Unscramble.getInstance().getScrambledWord()).withStyle(ChatFormatting.YELLOW).withStyle(ChatFormatting.BOLD));
                     String message = Component.Serializer.toJson(component);
                     server.getCommands().performPrefixedCommand(server.createCommandSourceStack(), "tellraw @a " + message);

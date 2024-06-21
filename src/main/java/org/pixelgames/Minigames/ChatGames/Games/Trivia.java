@@ -48,7 +48,7 @@ public class Trivia {
         Trivia.getInstance().setQuestion(randomEntry.getKey());
         Trivia.getInstance().setAnswer(randomEntry.getValue());
 
-        return " " + Trivia.getInstance().getQuestion();
+        return Trivia.getInstance().getQuestion();
     }
 
 }
