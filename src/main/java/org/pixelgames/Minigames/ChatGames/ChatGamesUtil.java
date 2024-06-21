@@ -51,7 +51,6 @@ public class ChatGamesUtil {
                     component = component.copy().append(messageWrapper.getUnfortunateResponse());
                     component = component.copy().append(messageWrapper.getAnswerResposne(Trivia.getInstance().getAnswer()));
                     String message = Component.Serializer.toJson(component);
-                    System.out.println(message);
 
                     server.getCommands().performPrefixedCommand(server.createCommandSourceStack(), "tellraw @a " + message);
                 } catch (Exception e) {
@@ -66,7 +65,6 @@ public class ChatGamesUtil {
                     component = component.copy().append(messageWrapper.getUnfortunateResponse());
                     component = component.copy().append(messageWrapper.getAnswerResposne(Unscramble.getInstance().getUnscrambledWord()));
                     String message = Component.Serializer.toJson(component);
-                    System.out.println(message);
 
                     server.getCommands().performPrefixedCommand(server.createCommandSourceStack(), "tellraw @a " + message);
                 } catch (Exception e) {
