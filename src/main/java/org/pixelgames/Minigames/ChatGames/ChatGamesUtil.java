@@ -49,7 +49,7 @@ public class ChatGamesUtil {
                     MessageWrapper messageWrapper = new MessageWrapper();
                     Component component = messageWrapper.getMessagePrefix();
                     component = component.copy().append(messageWrapper.getUnfortunateResponse());
-                    component = component.copy().append(messageWrapper.getAnswerResposne(Trivia.getInstance().getAnswer()));
+                    component = component.copy().append(messageWrapper.getAnswerResponse(Trivia.getInstance().getAnswer()));
                     String message = Component.Serializer.toJson(component);
 
                     server.getCommands().performPrefixedCommand(server.createCommandSourceStack(), "tellraw @a " + message);
@@ -63,7 +63,7 @@ public class ChatGamesUtil {
                     MessageWrapper messageWrapper = new MessageWrapper();
                     Component component = messageWrapper.getMessagePrefix();
                     component = component.copy().append(messageWrapper.getUnfortunateResponse());
-                    component = component.copy().append(messageWrapper.getAnswerResposne(Unscramble.getInstance().getUnscrambledWord()));
+                    component = component.copy().append(messageWrapper.getAnswerResponse(Unscramble.getInstance().getUnscrambledWord()));
                     String message = Component.Serializer.toJson(component);
 
                     server.getCommands().performPrefixedCommand(server.createCommandSourceStack(), "tellraw @a " + message);

@@ -32,7 +32,7 @@ public class MessageWrapper {
         return component;
     }
 
-    public Component getAnswerResposne(String answer) {
+    public Component getAnswerResponse(String answer) {
         Component component = Component.literal("The correct answer was: ").withStyle(ChatFormatting.GREEN).withStyle(ChatFormatting.BOLD);
         component = component.copy().append(Component.literal(answer).withStyle(ChatFormatting.YELLOW).withStyle(ChatFormatting.BOLD));
         return component;

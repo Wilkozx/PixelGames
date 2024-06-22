@@ -17,11 +17,8 @@ import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import org.pixelgames.Minigames.ChatGames.ChatGameManager;
-import org.pixelgames.Minigames.ChatGames.ChatGamesUtil;
-import org.pixelgames.Minigames.ChatGames.ChatListener;
+import org.pixelgames.Minigames.ChatGames.*;
 import org.pixelgames.Minigames.ChatGames.Games.Unscramble;
-import org.pixelgames.Minigames.ChatGames.MessageWrapper;
 import org.slf4j.Logger;
 
 import java.io.File;
@@ -68,7 +65,7 @@ public class PixelGames {
         LOGGER.info("[PixelGames] Thanks for installing PixelGames, please see to config/PixelGames to adjust preferences");
         Unscramble.populateList();
         ChatGameManager.MinigamePicker(event.getServer());
-
+        new ConfigBuilder().buildDefaultConfig();
     }
 
     @SubscribeEvent

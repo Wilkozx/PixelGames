@@ -23,39 +23,36 @@ public class ChatGameManager {
         Yaml yaml = new Yaml();
 
         try {
+            Map<String, Object> data = yaml.load(reader);
+            Map<String, Object> enabledMinigames = (Map<String, Object>) data.get("EnabledMinigames");
+            Map<String, Object> preferenceData = (Map<String, Object>) data.get("ChatgameSettings");
 
-        Iterable<Object> documents = yaml.loadAll(reader);
-        Map<String, Boolean> configData = (Map<String, Boolean>) documents.iterator().next(); // Access the first document
-        Map<String, String> preferenceData = (Map<String, String>) documents.iterator().next(); // Access the second document
-        Map<String, Integer> frequencyData = (Map<String, Integer>) documents.iterator().next();
-        Map<String, Integer> messageData = (Map<String, Integer>) documents.iterator().next(); // Access the fourth doc
+            Boolean trivia = (Boolean) enabledMinigames.get("Trivia");
+            Boolean wordScramble = (Boolean) enabledMinigames.get("wordScramble");
+            Boolean dotClicker = (Boolean) enabledMinigames.get("dotClicker");
 
-        Boolean trivia = configData.get("Trivia");
-        Boolean wordScramble = configData.get("WordScramble");
-        Boolean dotClicker = configData.get("dotClicker");
+            ArrayList<Integer> minigames = new ArrayList<>();
 
-        ArrayList<Integer> minigames = new ArrayList<>();
-
-        if (trivia) {
-            minigames.add(0);
-        }
-        if (wordScramble) {
-            minigames.add(1);
-        }
-
-        ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
-
-        Runnable task = () -> {
-            LogUtils.getLogger().info("[PixelGames] ChatGame initiated, selecting game based on preferences");
-
-            if (preferenceData.containsValue("Random")) {
-                ChatGamesUtil.getRandomMinigame(minigames);
+            if (trivia) {
+                minigames.add(0);
             }
-            if (preferenceData.containsValue("Sequential")) {
-                ChatGamesUtil.getSequentialMinigame(minigames);
+            if (wordScramble) {
+                minigames.add(1);
             }
-        };
-        executorService.scheduleAtFixedRate(task, 15, 300, TimeUnit.SECONDS);
+
+            ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
+
+            Runnable task = () -> {
+                LogUtils.getLogger().info("[PixelGames] ChatGame initiated, selecting game based on preferences");
+
+                if (preferenceData.containsValue("Random")) {
+                    ChatGamesUtil.getRandomMinigame(minigames);
+                }
+                if (preferenceData.containsValue("Sequential")) {
+                    ChatGamesUtil.getSequentialMinigame(minigames);
+                }
+            };
+            executorService.scheduleAtFixedRate(task, 15, 300, TimeUnit.SECONDS);
 
         } catch (Exception e) {
             System.out.println("Pixelgames config file not found.");
