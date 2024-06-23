@@ -18,6 +18,7 @@ import java.util.concurrent.TimeUnit;
 public class ChatGamesUtil {
 
     private static int sequence = 0;
+    private static final ConfigBuilder config = new ConfigBuilder();
 
     private static String latestMinigame = "";
 
@@ -26,7 +27,7 @@ public class ChatGamesUtil {
         int number = random.nextInt(minigames.size());
         ChatGamesUtil.runMinigame(number);
         ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
-        executorService.schedule(ChatGamesUtil::stopMinigame, 100, TimeUnit.SECONDS);
+        executorService.schedule(ChatGamesUtil::stopMinigame, config.getSettingsTimeout(), TimeUnit.SECONDS);
     }
 
     public static void getSequentialMinigame(ArrayList<Integer> minigames) {

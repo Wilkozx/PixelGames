@@ -5,11 +5,16 @@ import info.pixelmon.repack.org.spongepowered.yaml.internal.snakeyaml.Yaml;
 import info.pixelmon.repack.org.spongepowered.yaml.internal.snakeyaml.nodes.Tag;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 public class ConfigBuilder {
+
+    private final File configFile = new File("config/PixelGames/config.yaml");
 
     public void buildDefaultConfig() {
 
@@ -17,17 +22,17 @@ public class ConfigBuilder {
             new File("config/PixelGames").mkdirs();
         }
 
-        if(!new File("config/PixelGames/configtest.yaml").exists()) {
+        if(!configFile.exists()) {
             try {
-                new File("config/PixelGames/config.yaml").createNewFile();
-                FileWriter writer = new FileWriter("config/PixelGames/config.yaml");
+                configFile.createNewFile();
+                FileWriter writer = new FileWriter(configFile);
 
                 Map<String, Object> chatgameSettings = new HashMap<>();
                 // Preferences
                 Map<String, Object> preferences = new HashMap<>();
                 preferences.put("Preference", "Random");
-                preferences.put("Frequency", 15);
-                preferences.put("Timeout", 0.5);
+                preferences.put("Frequency", 300);
+                preferences.put("Timeout", 180);
                 chatgameSettings.put("ChatgameSettings", preferences);
                 // Enabled Minigames
                 Map<String, Object> enabledMinigames = new HashMap<>();
@@ -38,9 +43,9 @@ public class ConfigBuilder {
                 // Customize Message Formats
                 Map<String, Object> messageFormats = new HashMap<>();
                 messageFormats.put("Prefix", "&l&f[&cPG&f");
-                messageFormats.put("WinnerResponse", "%username% %l%ahas guessed the correct answer! ");
-                messageFormats.put("TimeoutResponse", "%l%cUnfortunately, no one answered correctly. ");
-                messageFormats.put("AnswerResponse", "%l%aThe correct answer was: %answer% ");
+                messageFormats.put("WinnerResponse", "%username% &l&ahas guessed the correct answer! ");
+                messageFormats.put("TimeoutResponse", "&l&cUnfortunately, no one answered correctly. ");
+                messageFormats.put("AnswerResponse", "&l&aThe correct answer was: %answer% ");
                 chatgameSettings.put("MessageFormats", messageFormats);
 
                 Yaml yaml = new Yaml();
@@ -49,6 +54,81 @@ public class ConfigBuilder {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+        }
+    }
+
+    public ArrayList<Integer> getActiveMinigames() {
+        try {
+            Yaml yaml = new Yaml();
+            FileReader reader = new FileReader(configFile);
+            Map<String, Object> data = yaml.load(reader);
+            Map<String, Object> enabledMinigames = (Map<String, Object>) data.get("EnabledMinigames");
+
+            Boolean trivia = (Boolean) enabledMinigames.get("Trivia");
+            Boolean wordScramble = (Boolean) enabledMinigames.get("wordScramble");
+            Boolean dotClicker = (Boolean) enabledMinigames.get("dotClicker");
+
+            ArrayList<Integer> minigames = new ArrayList<>();
+            if (trivia) {
+                minigames.add(0);
+            }
+            if (wordScramble) {
+                minigames.add(1);
+            }
+            if (dotClicker) {
+                minigames.add(2);
+            }
+
+            return minigames;
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public String getSettingsPreference() {
+        try {
+            Yaml yaml = new Yaml();
+            FileReader reader = new FileReader(configFile);
+            Map<String, Object> data = yaml.load(reader);
+            Map<String, Object> preferenceData = (Map<String, Object>) data.get("ChatgameSettings");
+            return (String) preferenceData.get("Preference");
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public int getSettingsFrequency() {
+        try {
+            Yaml yaml = new Yaml();
+            FileReader reader = new FileReader(configFile);
+            Map<String, Object> data = yaml.load(reader);
+            Map<String, Object> preferenceData = (Map<String, Object>) data.get("ChatgameSettings");
+            return (int) preferenceData.get("Frequency");
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public int getSettingsTimeout() {
+        try {
+            Yaml yaml = new Yaml();
+            FileReader reader = new FileReader(configFile);
+            Map<String, Object> data = yaml.load(reader);
+            Map<String, Object> preferenceData = (Map<String, Object>) data.get("ChatgameSettings");
+            return (int) preferenceData.get("Timeout");
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public Map<String, Object> getMessageFormats() {
+        try {
+            Yaml yaml = new Yaml();
+            FileReader reader = new FileReader(configFile);
+            Map<String, Object> data = yaml.load(reader);
+            return (Map<String, Object>) data.get("MessageFormats");
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 

@@ -7,6 +7,7 @@ import net.minecraft.network.chat.HoverEvent;
 
 public class MessageWrapper {
     private Component messagePrefix;
+    private ConfigBuilder config = new ConfigBuilder();
 
     public MessageWrapper() {
         this.messagePrefix = getMessagePrefix();
