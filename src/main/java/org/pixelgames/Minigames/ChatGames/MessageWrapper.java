@@ -4,6 +4,9 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.ClickEvent;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.HoverEvent;
+import org.antlr.v4.misc.OrderedHashMap;
+
+import java.util.Map;
 
 public class MessageWrapper {
     private Component messagePrefix;
@@ -11,6 +14,33 @@ public class MessageWrapper {
 
     public MessageWrapper() {
         this.messagePrefix = getMessagePrefix();
+        translateFormatToComponent((String) config.getMessageFormats().get("Prefix"));
+    }
+
+    public Component translateFormatToComponent(String format) {
+        Map<String, String> message = new OrderedHashMap<>();
+        StringBuilder word = new StringBuilder();
+        StringBuilder styles = new StringBuilder();
+
+        for (int i = 0; i < format.length(); i++) {
+            if (format.charAt(i) == '&') {
+                if(!word.isEmpty()) {
+                    message.put(word.toString(), styles.toString());
+                    word = new StringBuilder();
+                    styles = new StringBuilder();
+                }
+                i++;
+                styles.append(format.charAt(i));
+            } else {
+                word.append(format.charAt(i));
+            }
+        }
+        message.put(word.toString(), styles.toString());
+        System.out.println(message);
+
+        // TODO: Implement the rest of the method
+        
+        return null;
     }
 
     public Component getMessagePrefix() {

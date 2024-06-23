@@ -42,7 +42,7 @@ public class ConfigBuilder {
                 chatgameSettings.put("EnabledMinigames", enabledMinigames);
                 // Customize Message Formats
                 Map<String, Object> messageFormats = new HashMap<>();
-                messageFormats.put("Prefix", "&l&f[&cPG&f");
+                messageFormats.put("Prefix", "&l&f[&l&cPG&l&f]");
                 messageFormats.put("WinnerResponse", "%username% &l&ahas guessed the correct answer! ");
                 messageFormats.put("TimeoutResponse", "&l&cUnfortunately, no one answered correctly. ");
                 messageFormats.put("AnswerResponse", "&l&aThe correct answer was: %answer% ");
