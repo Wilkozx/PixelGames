@@ -49,7 +49,7 @@ public class ChatGamesUtil {
                 try {
                     MessageWrapper messageWrapper = new MessageWrapper();
                     Component component = messageWrapper.getMessagePrefix();
-                    component = component.copy().append(messageWrapper.getUnfortunateResponse());
+                    component = component.copy().append(messageWrapper.getTimeoutResponse());
                     component = component.copy().append(messageWrapper.getAnswerResponse(Trivia.getInstance().getAnswer()));
                     String message = Component.Serializer.toJson(component);
 
@@ -63,7 +63,7 @@ public class ChatGamesUtil {
                 try {
                     MessageWrapper messageWrapper = new MessageWrapper();
                     Component component = messageWrapper.getMessagePrefix();
-                    component = component.copy().append(messageWrapper.getUnfortunateResponse());
+                    component = component.copy().append(messageWrapper.getTimeoutResponse());
                     component = component.copy().append(messageWrapper.getAnswerResponse(Unscramble.getInstance().getUnscrambledWord()));
                     String message = Component.Serializer.toJson(component);
 
