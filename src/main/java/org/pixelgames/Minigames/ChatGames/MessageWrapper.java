@@ -1,27 +1,36 @@
 package org.pixelgames.Minigames.ChatGames;
 
 import net.minecraft.ChatFormatting;
-import net.minecraft.network.chat.ClickEvent;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.HoverEvent;
 import net.minecraft.network.chat.MutableComponent;
 import org.antlr.v4.misc.OrderedHashMap;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class MessageWrapper {
     private Component messagePrefix;
-    private ConfigBuilder config = new ConfigBuilder();
+    private final ConfigBuilder config = new ConfigBuilder();
 
     public MessageWrapper() {
         this.messagePrefix = getMessagePrefix();
-        translateFormatToComponent((String) config.getMessageFormats().get("Prefix"));
+
+        String username = "test";
+        HashMap<String, String> variables = new HashMap<>();
+        variables.put("%username%", username);
+        System.out.println(translateFormatToComponent((String) config.getMessageFormats().get("WinnerResponse"), variables));
     }
 
-    public Component translateFormatToComponent(String format) {
+    public Component translateFormatToComponent(String format, HashMap<String, String> variables) {
         Map<String, String> message = new OrderedHashMap<>();
         StringBuilder word = new StringBuilder();
         StringBuilder styles = new StringBuilder();
+
+        if (variables != null) {
+            for (Map.Entry<String, String> variable : variables.entrySet()) {
+                format = format.replace(variable.getKey(), variable.getValue());
+            }
+        }
 
         for (int i = 0; i < format.length(); i++) {
             if (format.charAt(i) == '&') {
@@ -38,11 +47,12 @@ public class MessageWrapper {
         }
         message.put(word.toString(), styles.toString());
 
-        // TODO: Implement the rest of the method
         MutableComponent component;
         Component finalComponent = Component.literal("");
         for (Map.Entry<String, String> entry : message.entrySet()) {
+
             component = Component.literal(entry.getKey());
+
             for (char i : entry.getValue().toCharArray()) {
                 switch (i) {
                     case '0' -> component.withStyle(ChatFormatting.BLACK);
@@ -72,23 +82,29 @@ public class MessageWrapper {
             }
             finalComponent = finalComponent.copy().append(component);
         }
+
+        System.out.println(finalComponent.getString());
         return finalComponent;
     }
 
     public Component getMessagePrefix() {
-        return translateFormatToComponent((String) config.getMessageFormats().get("Prefix"));
+        return translateFormatToComponent((String) config.getMessageFormats().get("Prefix"), null);
     }
 
     public Component getTimeoutResponse() {
-        return translateFormatToComponent((String) config.getMessageFormats().get("TimeoutResponse"));
+        return translateFormatToComponent((String) config.getMessageFormats().get("TimeoutResponse"), null);
     }
 
     public Component getWinnerResponse(String username) {
-        return translateFormatToComponent((String) config.getMessageFormats().get("WinnerResponse"));
+        HashMap<String, String> variables = new HashMap<>();
+        variables.put("%username%", username);
+        return translateFormatToComponent((String) config.getMessageFormats().get("WinnerResponse"), variables);
     }
 
     public Component getAnswerResponse(String answer) {
-        return translateFormatToComponent((String) config.getMessageFormats().get("AnswerResponse"));
+        HashMap<String, String> variables = new HashMap<>();
+        variables.put("%answer%", answer);
+        return translateFormatToComponent((String) config.getMessageFormats().get("AnswerResponse"), variables);
     }
 
 }
