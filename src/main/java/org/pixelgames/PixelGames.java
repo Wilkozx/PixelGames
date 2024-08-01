@@ -88,9 +88,18 @@ public class PixelGames {
                 component = component.copy().append(messageWrapper.getWinnerResponse(event.getUsername()));
                 String winnerMessage = Component.Serializer.toJson(component);
 
+                Component component1 = messageWrapper.getMessagePrefix();
+                component1 = component1.copy().append(messageWrapper.getAnswerResponse(ChatListener.getToMatch()));
+                String answerMessage = Component.Serializer.toJson(component1);
+
+
                 ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
                 executorService.schedule(() -> {
                     server.getCommands().performPrefixedCommand(server.createCommandSourceStack(), "tellraw @a " + winnerMessage);
+                    executorService.shutdown();
+                }, 50, TimeUnit.MILLISECONDS);
+                executorService.schedule(() -> {
+                    server.getCommands().performPrefixedCommand(server.createCommandSourceStack(), "tellraw @a " + answerMessage);
                     executorService.shutdown();
                 }, 50, TimeUnit.MILLISECONDS);
 
