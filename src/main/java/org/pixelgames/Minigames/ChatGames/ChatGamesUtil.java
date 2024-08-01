@@ -42,37 +42,39 @@ public class ChatGamesUtil {
     }
 
     public static void stopMinigame() {
-        MinecraftServer server = ChatListener.getServer();
-        switch (latestMinigame) {
-            case "Trivia":
-                ChatListener.stopChatMonitoring();
-                try {
-                    MessageWrapper messageWrapper = new MessageWrapper();
-                    Component component = messageWrapper.getMessagePrefix();
-                    component = component.copy().append(messageWrapper.getTimeoutResponse());
-                    component = component.copy().append(messageWrapper.getAnswerResponse(Trivia.getInstance().getAnswer()));
-                    String message = Component.Serializer.toJson(component);
+        if (ChatListener.isMonitoringChat()) {
+            MinecraftServer server = ChatListener.getServer();
+            switch (latestMinigame) {
+                case "Trivia":
+                    ChatListener.stopChatMonitoring();
+                    try {
+                        MessageWrapper messageWrapper = new MessageWrapper();
+                        Component component = messageWrapper.getMessagePrefix();
+                        component = component.copy().append(messageWrapper.getTimeoutResponse());
+                        component = component.copy().append(messageWrapper.getAnswerResponse(Trivia.getInstance().getAnswer()));
+                        String message = Component.Serializer.toJson(component);
 
-                    server.getCommands().performPrefixedCommand(server.createCommandSourceStack(), "tellraw @a " + message);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                ChatListener.stopChatMonitoring();
-                break;
-            case "Scramble":
-                try {
-                    MessageWrapper messageWrapper = new MessageWrapper();
-                    Component component = messageWrapper.getMessagePrefix();
-                    component = component.copy().append(messageWrapper.getTimeoutResponse());
-                    component = component.copy().append(messageWrapper.getAnswerResponse(Unscramble.getInstance().getUnscrambledWord()));
-                    String message = Component.Serializer.toJson(component);
+                        server.getCommands().performPrefixedCommand(server.createCommandSourceStack(), "tellraw @a " + message);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    ChatListener.stopChatMonitoring();
+                    break;
+                case "Scramble":
+                    try {
+                        MessageWrapper messageWrapper = new MessageWrapper();
+                        Component component = messageWrapper.getMessagePrefix();
+                        component = component.copy().append(messageWrapper.getTimeoutResponse());
+                        component = component.copy().append(messageWrapper.getAnswerResponse(Unscramble.getInstance().getUnscrambledWord()));
+                        String message = Component.Serializer.toJson(component);
 
-                    server.getCommands().performPrefixedCommand(server.createCommandSourceStack(), "tellraw @a " + message);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                ChatListener.stopChatMonitoring();
-                break;
+                        server.getCommands().performPrefixedCommand(server.createCommandSourceStack(), "tellraw @a " + message);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    ChatListener.stopChatMonitoring();
+                    break;
+            }
         }
     }
 
