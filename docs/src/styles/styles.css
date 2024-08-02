@@ -1,0 +1,152 @@
+
+:root {
+    --primary: #292a2b;
+    --secondary: #ffffff;
+    --tertiary: #a83f3f;
+    --logo-image: url('../icons/pixelskills-logo-notext.png');
+    --text-primary: #ffffff;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: var(--primary);
+    max-width: 1920px;
+    margin: 0 auto;
+}
+
+main {
+    display: flex;
+    height: 100vh;
+    background-color: var(--secondary);
+}
+
+#side-menu {
+    background-color: var(--primary);
+    width: 25%;
+}
+
+#content-container {
+    background-color: var(--secondary);
+    width: 75%;
+}
+
+#side-menu-header {
+    background-image: var(--logo-image);
+    background-size: 550px;
+    background-position: center;
+    background-repeat: no-repeat;
+    text-align: center;
+    padding: 20px;
+    color: var(--text-primary);
+}
+
+#side-menu-header h1 {
+    font-variant: small-caps;
+    font-size: 2.5rem;
+    margin-bottom: 0px;
+}
+
+#side-menu-header em {
+    color: rgb(238, 103, 103);
+}
+
+#side-menu-header p {
+    margin-top: 0px;
+}
+
+#side-menu-content {
+    display: flex;
+    flex-direction: column;
+    margin-top: 15px;
+}
+
+#side-menu-content a {
+    color: var(--text-primary);
+    text-decoration: none;
+    font-size: 1.4rem;
+    margin-bottom: 10px;
+    padding: 10px;
+    padding-left: 50px;
+}
+
+#side-menu-content a:hover {
+    color: var(--secondary) !important;
+    background-color: var(--tertiary);
+}
+
+.current-page {
+    color: var(--primary) !important;
+    background-color: var(--secondary);
+}
+
+#side-menu-footer {
+    color: var(--text-primary);
+    text-align: center;
+    padding: 20px;
+    font-size: 0.8rem;
+}
+
+#side-menu-footer em {
+    color: rgb(238, 103, 103);
+    font-size: 1.1em;
+}
+
+#content-container-header {
+    padding: 20px;
+    padding-bottom: 0px;
+    margin-left: 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#content-container-text {
+    padding: 20px;
+    padding-top: 0px;
+    margin-left: 50px;
+}
+
+#content-container-text h1 {
+    font-size: 2.5rem;
+    color: var(--primary);
+}
+
+#content-container-text ul {
+    list-style-type: none;
+    padding: 15px;
+    padding-top: 5px;
+}
+
+#content-container-text li {
+    font-size: 1.2em;
+    font-style: italic;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+@media screen and (max-width: 768px) {
+    main {
+        flex-direction: column;
+    }
+
+    #side-menu {
+        width: 100%;
+    }
+
+    #content-container {
+        width: 100%;
+    }
+
+    #side-menu-content a {
+        padding-left: 20px;
+    }
+
+    #content-container-header {
+        margin-left: 0px;
+    }
+
+    #content-container-text {
+        margin-left: 0px;
+    }
+    
+}
