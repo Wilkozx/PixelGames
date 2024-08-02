@@ -8,10 +8,10 @@ Pixelgames let's your playbase enjoy some chat minigames with configurable rewar
 ## Features:
 
 ### Multiple Minigames: 
-Challenge yourself and your friends with trivia and unscramble challenges! more coming soon!
+Challenge yourself and your friends with trivia and unscramble challenges!
 
 ### Configurable:
-You can enable or disable specific minigames through a config file, Soon you will be able to configure the rewards!
+You can enable or disable specific minigames, modify mod messages such as prefixes & winner responses through the config file.
 
 ### Winner Recognition: 
 After each minigame, the champion's name is proudly announced in chat for everyone to see.
@@ -26,7 +26,7 @@ Place the downloaded file in your Server mods folder.
 
 ## Usage:
 
-TODO: Write instructions here
+Checkout the Documentation Site [PixelGames](https://wilkozx.github.io/PixelGames)
 
 ## Contributing:
 
