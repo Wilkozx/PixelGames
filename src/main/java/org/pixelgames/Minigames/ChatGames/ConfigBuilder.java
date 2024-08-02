@@ -45,7 +45,7 @@ public class ConfigBuilder {
                 messageFormats.put("Prefix", "&l&f[&l&cPG&l&f]");
                 messageFormats.put("WinnerResponse", "%username% &l&ahas guessed the correct answer! ");
                 messageFormats.put("TimeoutResponse", "&l&cUnfortunately, no one answered correctly. ");
-                messageFormats.put("AnswerResponse", "&l&aThe correct answer was: %answer% ");
+                messageFormats.put("AnswerResponse", "&l&aThe correct answer was: &l&e%answer% ");
                 chatgameSettings.put("MessageFormats", messageFormats);
 
                 Yaml yaml = new Yaml();
