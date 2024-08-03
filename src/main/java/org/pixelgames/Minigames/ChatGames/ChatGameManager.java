@@ -35,6 +35,26 @@ public class ChatGameManager {
         }
     }
 
+    public static void forceStartMinigame(MinecraftServer server) {
+        ChatListener.setMinecraftServer(server);
+        try {
+            ConfigBuilder config = new ConfigBuilder();
+            ArrayList<Integer> minigames = config.getActiveMinigames();
+            String preference = config.getSettingsPreference();
+
+            LogUtils.getLogger().info("[PixelGames] ChatGame force initiated, selecting game based on preferences");
+
+            if (Objects.equals(preference, "Random")) {
+                ChatGamesUtil.getRandomMinigame(minigames);
+            }
+            if (Objects.equals(preference, "Sequential")) {
+                ChatGamesUtil.getSequentialMinigame(minigames);
+            }
+        } catch (Exception e) {
+            System.out.println("Pixelgames config file not found.");
+        }
+    }
+
 }
 
 
