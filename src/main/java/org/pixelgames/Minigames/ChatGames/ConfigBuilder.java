@@ -22,11 +22,9 @@ public class ConfigBuilder {
             new File("config/PixelGames").mkdirs();
         }
 
-        if(!configFile.exists()) {
+        if(configFile.exists()) {
             try {
-                configFile.createNewFile();
                 FileWriter writer = new FileWriter(configFile);
-
                 Map<String, Object> chatgameSettings = new HashMap<>();
                 // Preferences
                 Map<String, Object> preferences = new HashMap<>();
