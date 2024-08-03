@@ -1,10 +1,11 @@
-
 :root {
-    --primary: #292a2b;
+    --primary: #121212;
     --secondary: #ffffff;
-    --tertiary: #a83f3f;
+    --tertiary: #ff5468;
     --logo-image: url('../icons/pixelskills-logo-notext.png');
-    --text-primary: #ffffff;
+    --text-primary: #282828;
+    --text-secondary: #ffffff;
+    --svg-colour: #282828;
 }
 
 body {
@@ -14,9 +15,34 @@ body {
     margin: 0 auto;
 }
 
+.svg {
+    fill: var(--svg-colour);
+    width: 40px;
+    height: 40px;
+}
+
+.svg:hover {
+    cursor: pointer;
+}
+
+.darkmode {
+    --primary: #121212;
+    --secondary: #282828;
+    --tertiary: #ff5468;
+    --logo-image: url('../icons/pixelskills-logo-notext.png');
+    --text-primary: #ffffff;
+    --text-secondary: #ffffff;
+    --svg-colour: #ffffff;
+}
+
+#darkmode-toggle {
+    cursor: pointer;
+    padding-right: 15px;
+}
+
 main {
     display: flex;
-    height: 100vh;
+    min-height: 100vh;
     background-color: var(--secondary);
 }
 
@@ -28,6 +54,7 @@ main {
 #content-container {
     background-color: var(--secondary);
     width: 75%;
+    color: var(--text-primary);
 }
 
 #side-menu-header {
@@ -37,7 +64,7 @@ main {
     background-repeat: no-repeat;
     text-align: center;
     padding: 20px;
-    color: var(--text-primary);
+    color: var(--text-secondary);
 }
 
 #side-menu-header h1 {
@@ -47,7 +74,7 @@ main {
 }
 
 #side-menu-header em {
-    color: rgb(238, 103, 103);
+    color: var(--tertiary);
 }
 
 #side-menu-header p {
@@ -61,7 +88,7 @@ main {
 }
 
 #side-menu-content a {
-    color: var(--text-primary);
+    color: var(--text-secondary);
     text-decoration: none;
     font-size: 1.4rem;
     margin-bottom: 10px;
@@ -70,17 +97,17 @@ main {
 }
 
 #side-menu-content a:hover {
-    color: var(--secondary) !important;
+    color: var(--text-secondary) !important;
     background-color: var(--tertiary);
 }
 
 .current-page {
-    color: var(--primary) !important;
+    color: var(--text-primary) !important;
     background-color: var(--secondary);
 }
 
 #side-menu-footer {
-    color: var(--text-primary);
+    color: var(--text-secondary);
     text-align: center;
     padding: 20px;
     font-size: 0.8rem;
@@ -108,7 +135,7 @@ main {
 
 #content-container-text h1 {
     font-size: 2.5rem;
-    color: var(--primary);
+    color: var(--text-primary);
 }
 
 #content-container-text ul {
