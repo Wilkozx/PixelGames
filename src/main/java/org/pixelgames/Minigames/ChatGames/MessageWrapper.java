@@ -14,11 +14,6 @@ public class MessageWrapper {
 
     public MessageWrapper() {
         this.messagePrefix = getMessagePrefix();
-
-        String username = "test";
-        HashMap<String, String> variables = new HashMap<>();
-        variables.put("%username%", username);
-        System.out.println(translateFormatToComponent((String) config.getMessageFormats().get("WinnerResponse"), variables));
     }
 
     public Component translateFormatToComponent(String format, HashMap<String, String> variables) {
@@ -83,7 +78,6 @@ public class MessageWrapper {
             finalComponent = finalComponent.copy().append(component);
         }
 
-        System.out.println(finalComponent.getString());
         return finalComponent;
     }
 
