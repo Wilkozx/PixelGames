@@ -25,6 +25,8 @@ public class ConfigBuilder {
         if(configFile.exists()) {
             try {
                 FileWriter writer = new FileWriter(configFile);
+                // Add web docs link
+                writer.write("# For more information on how to configure PixelGames, please visit: https://wilkozx.github.io/PixelGames\n");
                 Map<String, Object> chatgameSettings = new HashMap<>();
                 // Preferences
                 Map<String, Object> preferences = new HashMap<>();
