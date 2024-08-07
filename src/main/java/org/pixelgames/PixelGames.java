@@ -62,7 +62,15 @@ public class PixelGames {
     // You can use SubscribeEvent and let the Event Bus discover methods to call
     @SubscribeEvent
     public void onServerStarting(ServerStartingEvent event) throws IOException {
-        LOGGER.info("[PixelGames] Thanks for installing PixelGames, please see to config/PixelGames to adjust preferences");
+        LOGGER.info(
+                """
+
+                         ____   __   _  _  ____  __     ___   __   _  _  ____  ____\s
+                        (  _ \\ (  ) ( \\/ )(  __)(  )   / __) / _\\ ( \\/ )(  __)/ ___)
+                         ) __/  )(   )  (  ) _) / (_/\\( (_ \\/    \\/ \\/ \\ ) _) \\___ \\
+                        (__)   (__) (_/\\_)(____)\\____/ \\___/\\_/\\_/\\_)(_/(____)(____/
+                        """ +
+                "Thanks for installing PixelGames, please see to config/PixelGames to adjust preferences" + "\n");
         Unscramble.populateList();
         ChatGameManager.MinigamePicker(event.getServer());
         new ConfigBuilder().buildDefaultConfig();
