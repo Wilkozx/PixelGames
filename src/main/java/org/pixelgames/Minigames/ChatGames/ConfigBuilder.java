@@ -3,18 +3,18 @@ package org.pixelgames.Minigames.ChatGames;
 import info.pixelmon.repack.org.spongepowered.yaml.internal.snakeyaml.DumperOptions;
 import info.pixelmon.repack.org.spongepowered.yaml.internal.snakeyaml.Yaml;
 import info.pixelmon.repack.org.spongepowered.yaml.internal.snakeyaml.nodes.Tag;
+import org.pixelgames.Minigames.ChatGames.RewardManager.RewardFunctions;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class ConfigBuilder {
 
     private final File configFile = new File("config/PixelGames/config.yaml");
+    private final File rewardsFile = new File("config/PixelGames/rewards.yaml");
 
     public void buildDefaultConfig() {
 
@@ -55,6 +55,58 @@ public class ConfigBuilder {
                 e.printStackTrace();
             }
         }
+    }
+
+    public void buildRewardsConfig() {
+        if(!rewardsFile.exists()) {
+            try {
+                rewardsFile.createNewFile();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        if (rewardsFile.exists()) {
+            try {
+                FileWriter writer = new FileWriter(rewardsFile);
+
+                writer.write("# For more information on how to configure PixelGames, please visit: https://wilkozx.github.io/PixelGames\n");
+                Map<String, Object> rewards = new HashMap<>();
+
+                List<Map<String, Object>> triviaBundle = new ArrayList<>();
+                Map<String, Object> triviaItem1 = new HashMap<>();
+                triviaItem1.put("itemName", "pixelmon:poke_ball");
+                triviaItem1.put("weighting", 0.6);
+                triviaItem1.put("quantity", 32);
+                triviaBundle.add(triviaItem1);
+                Map<String, Object> triviaItem2 = new HashMap<>();
+                triviaItem2.put("itemName", "pixelmon:great_ball");
+                triviaItem2.put("weighting", 0.3);
+                triviaItem2.put("quantity", 24);
+                triviaBundle.add(triviaItem2);
+                rewards.put("Trivia", triviaBundle);
+
+                List<Map<String, Object>> unscrambleBundle = new ArrayList<>();
+                Map<String, Object> unscrambleItem1 = new HashMap<>();
+                unscrambleItem1.put("itemName", "pixelmon:ultra_ball");
+                unscrambleItem1.put("weighting", 0.6);
+                unscrambleItem1.put("quantity", 16);
+                unscrambleBundle.add(unscrambleItem1);
+                Map<String, Object> unscrambleItem2 = new HashMap<>();
+                unscrambleItem2.put("itemName", "pixelmon:master_ball");
+                unscrambleItem2.put("weighting", 0.4);
+                unscrambleItem2.put("quantity", 1);
+                unscrambleBundle.add(unscrambleItem2);
+                rewards.put("Unscramble", unscrambleBundle);
+
+                Yaml yaml = new Yaml();
+                writer.write(yaml.dumpAs(rewards, Tag.MAP, DumperOptions.FlowStyle.BLOCK));
+                writer.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
     }
 
     public ArrayList<Integer> getActiveMinigames() {
