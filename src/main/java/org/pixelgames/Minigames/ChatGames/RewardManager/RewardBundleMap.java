@@ -37,4 +37,29 @@ public class RewardBundleMap {
         return rewardBundleMap.get(bundleName);
     }
 
+    public static Reward getRandomReward(RewardBundle bundle) {
+        int randomIndex = (int) Math.floor(Math.random() * bundle.getRewards().length);
+        return bundle.getRewards()[randomIndex];
+    }
+
+    public static Reward getRandomWeightedReward(RewardBundle bundleName) {
+        List<Double> cumulativeWeights = new ArrayList<>();
+        double totalWeight = 0;
+
+        for (Reward reward : bundleName.getRewards()) {
+            totalWeight += reward.getWeighting();
+            cumulativeWeights.add(totalWeight);
+        }
+
+        double randomWeight = Math.random() * totalWeight;
+
+        for (int i = 0; i < cumulativeWeights.size(); i++) {
+            if (randomWeight < cumulativeWeights.get(i)) {
+                return bundleName.getRewards()[i];
+            }
+        }
+        return null;
+    }
+
+
 }
