@@ -76,6 +76,8 @@ public class PixelGames {
         ChatGameManager.MinigamePicker(event.getServer());
         new ConfigBuilder().buildDefaultConfig();
         new ConfigBuilder().buildRewardsConfig();
+        RewardFunctions rewardFunctions = new RewardFunctions();
+        rewardFunctions.readRewardConfig();
     }
 
     @SubscribeEvent
