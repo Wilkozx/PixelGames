@@ -19,6 +19,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.pixelgames.Minigames.ChatGames.*;
 import org.pixelgames.Minigames.ChatGames.Games.Unscramble;
+import org.pixelgames.Minigames.ChatGames.RewardManager.RewardFunctions;
 import org.slf4j.Logger;
 
 import java.io.File;
@@ -74,6 +75,7 @@ public class PixelGames {
         Unscramble.populateList();
         ChatGameManager.MinigamePicker(event.getServer());
         new ConfigBuilder().buildDefaultConfig();
+        new ConfigBuilder().buildRewardsConfig();
     }
 
     @SubscribeEvent
