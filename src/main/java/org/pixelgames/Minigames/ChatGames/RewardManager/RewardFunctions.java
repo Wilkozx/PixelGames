@@ -41,7 +41,6 @@ public class RewardFunctions {
                 rewardBundles.addRewardBundle(bundleName, rewardBundle);
             }
 
-            System.out.println(rewardBundles.getRewardBundle("Trivia").getReward(0).getItemName()); // example command
             fileReader.close();
         }
     }
