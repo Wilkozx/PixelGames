@@ -113,7 +113,7 @@ public class ChatGamesUtil {
                     LogUtils.getLogger().info("[PixelGames] Scramble Answer is " + Unscramble.getInstance().getUnscrambledWord().toLowerCase());
                     ChatListener.setToMatch(Unscramble.getInstance().getUnscrambledWord().toLowerCase());
                     ChatListener.startChatMonitoring();
-                    latestMinigame = "Scramble";
+                    latestMinigame = "Unscramble";
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -145,6 +145,10 @@ public class ChatGamesUtil {
                 } catch (Exception ignore) {}
         }
 
+    }
+
+    public static String getCurrentMinigame() {
+        return latestMinigame;
     }
 
     public static String isValidAnswer(String answer) {

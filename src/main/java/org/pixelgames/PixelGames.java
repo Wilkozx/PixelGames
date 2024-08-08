@@ -108,9 +108,9 @@ public class PixelGames {
                 ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
                 executorService.schedule(() -> {
                     server.getCommands().performPrefixedCommand(server.createCommandSourceStack(), "tellraw @a " + winnerMessage);
-                    // TODO: make rewards chose correct rewards based on minigame
                     RewardFunctions rewardFunctions = new RewardFunctions();
-                    String[] reward = rewardFunctions.getRandomReward("Trivia");
+                    String currentMinigame = ChatGamesUtil.getCurrentMinigame();
+                    String[] reward = rewardFunctions.getRandomReward(currentMinigame);
                     server.getCommands().performPrefixedCommand(server.createCommandSourceStack(), "give " + event.getUsername() + " " + reward[0] + " " + reward[1]);
                     executorService.shutdown();
                 }, 50, TimeUnit.MILLISECONDS);
