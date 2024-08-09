@@ -22,7 +22,7 @@ public class ConfigBuilder {
             new File("config/PixelGames").mkdirs();
         }
 
-        if(configFile.exists()) {
+        if(configFile.length() == 0) {
             try {
                 FileWriter writer = new FileWriter(configFile);
                 // Add web docs link
@@ -67,10 +67,9 @@ public class ConfigBuilder {
             }
         }
 
-        if (rewardsFile.exists()) {
+        if (rewardsFile.length() == 0) {
             try {
                 FileWriter writer = new FileWriter(rewardsFile);
-
                 writer.write("# For more information on how to configure PixelGames, please visit: https://wilkozx.github.io/PixelGames\n");
                 Map<String, Object> rewards = new HashMap<>();
 
