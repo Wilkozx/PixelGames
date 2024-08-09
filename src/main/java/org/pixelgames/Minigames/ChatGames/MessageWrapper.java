@@ -101,4 +101,12 @@ public class MessageWrapper {
         return translateFormatToComponent((String) config.getMessageFormats().get("AnswerResponse"), variables);
     }
 
+    public Component getPrizeResponse(String quantity, String item) {
+        HashMap<String, String> variables = new HashMap<>();
+        variables.put("%quantity%", quantity);
+        variables.put("%item%", item);
+        return translateFormatToComponent((String) config.getMessageFormats().get("PrizeResponse"), variables);
+    }
+
+
 }
