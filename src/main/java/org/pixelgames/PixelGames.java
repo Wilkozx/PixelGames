@@ -111,6 +111,11 @@ public class PixelGames {
                     RewardFunctions rewardFunctions = new RewardFunctions();
                     String currentMinigame = ChatGamesUtil.getCurrentMinigame();
                     String[] reward = rewardFunctions.getRandomReward(currentMinigame);
+
+                    Component component2 = messageWrapper.getMessagePrefix();
+                    component2 = component2.copy().append(messageWrapper.getPrizeResponse(reward[1], reward[0]));
+                    String prizeMessage = Component.Serializer.toJson(component2);
+                    server.getCommands().performPrefixedCommand(server.createCommandSourceStack(), "tellraw " + event.getUsername() + " " + prizeMessage);
                     server.getCommands().performPrefixedCommand(server.createCommandSourceStack(), "give " + event.getUsername() + " " + reward[0] + " " + reward[1]);
                     executorService.shutdown();
                 }, 50, TimeUnit.MILLISECONDS);
