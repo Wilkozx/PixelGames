@@ -109,7 +109,14 @@ public class PixelGames {
                     server.getCommands().performPrefixedCommand(server.createCommandSourceStack(), "tellraw @a " + winnerMessage);
                     RewardFunctions rewardFunctions = new RewardFunctions();
                     String currentMinigame = ChatGamesUtil.getCurrentMinigame();
-                    String[] reward = rewardFunctions.getRandomReward(currentMinigame);
+
+                    String[] reward = new String[1];
+                    String rewardType = new ConfigBuilder().getRewardType();
+                    reward = switch (rewardType) {
+                        case "Random" -> rewardFunctions.getRandomReward(currentMinigame);
+                        case "Weighted" -> rewardFunctions.getRandomWeightedReward(currentMinigame);
+                        default -> reward;
+                    };
 
                     Component component2 = messageWrapper.getMessagePrefix();
                     component2 = component2.copy().append(messageWrapper.getPrizeResponse(reward[1], reward[0]));

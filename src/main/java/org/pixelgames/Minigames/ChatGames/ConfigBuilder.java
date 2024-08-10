@@ -3,9 +3,11 @@ package org.pixelgames.Minigames.ChatGames;
 import info.pixelmon.repack.org.spongepowered.yaml.internal.snakeyaml.DumperOptions;
 import info.pixelmon.repack.org.spongepowered.yaml.internal.snakeyaml.Yaml;
 import info.pixelmon.repack.org.spongepowered.yaml.internal.snakeyaml.nodes.Tag;
-import org.pixelgames.Minigames.ChatGames.RewardManager.RewardFunctions;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -28,6 +30,10 @@ public class ConfigBuilder {
                 // Add web docs link
                 writer.write("# For more information on how to configure PixelGames, please visit: https://wilkozx.github.io/PixelGames\n");
                 Map<String, Object> chatgameSettings = new HashMap<>();
+                // add the choice between weighted or random rewards;
+                Map<String, String> rewardType = new HashMap<>();
+                rewardType.put("Type", "Weighted");
+                chatgameSettings.put("RewardType", rewardType);
                 // Preferences
                 Map<String, Object> preferences = new HashMap<>();
                 preferences.put("Preference", "Random");
@@ -71,8 +77,8 @@ public class ConfigBuilder {
             try {
                 FileWriter writer = new FileWriter(rewardsFile);
                 writer.write("# For more information on how to configure PixelGames, please visit: https://wilkozx.github.io/PixelGames\n");
-                Map<String, Object> rewards = new HashMap<>();
 
+                Map<String, Object> rewards = new HashMap<>();
                 List<Map<String, Object>> triviaBundle = new ArrayList<>();
                 Map<String, Object> triviaItem1 = new HashMap<>();
                 triviaItem1.put("itemName", "pixelmon:poke_ball");
@@ -179,6 +185,18 @@ public class ConfigBuilder {
             FileReader reader = new FileReader(configFile);
             Map<String, Object> data = yaml.load(reader);
             return (Map<String, Object>) data.get("MessageFormats");
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public String getRewardType() {
+        try {
+            Yaml yaml = new Yaml();
+            FileReader reader = new FileReader(configFile);
+            Map<String, Object> data = yaml.load(reader);
+            Map<String, Object> rewardType = (Map<String, Object>) data.get("RewardType");
+            return (String) rewardType.get("Type");
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
