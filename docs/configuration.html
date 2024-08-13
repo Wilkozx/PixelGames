@@ -39,26 +39,85 @@
                 </div>
             </div>
             <div id="content-container-text">
-                <h1>Configs</h1>
-                    <p>After Installing, go ahead and throw the mod onto your server and boot it up! this will generate the default configs in Config/PixelGames</p>
+                <h1>Getting Started with Configs</h1>
+                    <p>If you've never messed around in a mod config before, hopefully this section will provide a nice introduction to customizing this config!</p>
+                <h2>Prerequisites</h2>
+                    <p>• Please ensure after installing the mod, you've started/restarted your minecraft server.</p>
+                    <p>• Now if you navigate in your servers directory to /config, you should notice a new folder called 'PixelGames'.</p>
+                <h2>Editing the Configs</h2>
+                    <p>• Open the 'PixelGames' folder and you should see a file called 'config.yaml', This is where we will start.</p>
                 <h2>Config.yaml</h2>
-                    <div id="content-container-content">
-                        <img src="src/images/config.png" alt="config.yaml" height="400px">
+                    <p>• This file is where you can change the general settings of the mod to your liking.</p>
+                    <div class="config-display">
+                        <div class="config-header">
+                            <h3>EnabledMinigames</h3>
+                        </div>
+                        <div class="config-table">
+                            <div>
+                                <h2>Value</h2>
+                                <p>Trivia</p>
+                                <p>wordScramble</p>
+                                <p>dotClicker</p>
+                            </div>
+                            <div>
+                                <h2>Default</h2>
+                                <p>True</p>
+                                <p>True</p>
+                                <p>false</p>
+                            </div>
+                            <div>
+                                <h2>Options</h2>
+                                <p>True/False</p>
+                                <p>True/False</p>
+                                <p>True/False</p>
+                            </div>
+                        </div>
                     </div>
-                    <p>Here is the default config file for PixelGames.</p>
-            </div>
-            <ul>
-                <li>EnabledMinigames:</li>
-                <p>Configure this to either true or false to toggle minigames on or off.</p>
-                <li>ChatgameSettgins</li>
-                <p>Our Preference option is between Sequential & Random, Sequential being a rotation between each minigame and random being a completly random choice eaech time</p>
-                <p>The Timeout option is the time from when the minigame starts to when players can no longer enter in milliseconds and the TimeoutResponse is fired with the answer</p>
-                <p>The Frequency option is the time between minigames starting in milliseconds</p>
-                <li>MessageFormats</li>
-                <p>These Responses use Minecraft Colour Codes / Formatting Codes to generate a properly formatted message to respond to your server or players.</p>
-                <p>You may also notice %username% these are variables that can be moved around corresponding strings, these simply are variables that are auto changed by the mod to the users username for example</p>
-            </ul>
-            
+                    <div class="config-display">
+                        <div class="config-header">
+                            <h3>RewardType</h3>
+                        </div>
+                        <div class="config-table">
+                            <div>
+                                <h2>Value</h2>
+                                <p>Type</p>
+                            </div>
+                            <div>
+                                <h2>Default</h2>
+                                <p>Weighted</p>
+
+                            </div>
+                            <div>
+                                <h2>Options</h2>
+                                <p>Random/Weighted</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="config-display">
+                        <div class="config-header">
+                            <h3>ChatgameSettings</h3>
+                        </div>
+                        <div class="config-table">
+                            <div>
+                                <h2>Value</h2>
+                                <p>Preference</p>
+                                <p>Timeout</p>
+                                <p>Frequency</p>
+                            </div>
+                            <div>
+                                <h2>Default</h2>
+                                <p>Random</p>
+                                <p>180 (in ms)</p>
+                                <p>300 (in ms)</p>
+                            </div>
+                            <div>
+                                <h2>Options</h2>
+                                <p>Random/Sequential</p>
+                                <p>time in ms</p>
+                                <p>time in ms</p>
+                            </div>
+                        </div>
+                    </div>
         </div>
     </main>
 </body>
