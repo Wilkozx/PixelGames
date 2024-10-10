@@ -1,6 +1,6 @@
 :root {
     --primary: #121212;
-    --secondary: #ffffff;
+    --secondary: #f7f7f7;
     --tertiary: #ff5468;
     --tertiary-light: rgb(197, 76, 90);
     --logo-image: url('../icons/pixelskills-logo-notext.png');
@@ -165,8 +165,8 @@ main {
 
 .config-header {
     display: inherit;
-    color: var(--text-secondary);
-    background-color: var(--tertiary);
+    color: var(--secondary);
+    background-color: var(--svg-colour);
     padding-left: 14px;
     margin-bottom: 0px;
     border-bottom: #121212 2px solid;
@@ -178,18 +178,18 @@ main {
     padding: 10px;
     padding-left: 14px;
     padding-right: 14px;
-    background-color: var(--tertiary-light);
+    background-color: var(--svg-colour);
     text-align: center;
 }
 
 .config-table h2 {
-    color: var(--text-secondary);
+    color: var(--secondary);
     margin: 0px;
     padding: 10px;
 }
 
 .config-table p {
-    color: var(--text-secondary);
+    color: var(--secondary);
     margin: 0px;
     padding: 14px;
 }
