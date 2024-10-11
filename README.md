@@ -17,7 +17,7 @@ You can enable or disable specific minigames, modify mod messages such as prefix
 After each minigame, the champion's name is proudly announced in chat for everyone to see.
 
 ### Rewards System :
-A rewards system is planned for a future update.
+A rewards system with configurable random or weighted rewards!
 
 ## Installation:
 
@@ -32,5 +32,5 @@ Checkout the Documentation Site [PixelGames](https://wilkozx.github.io/PixelGame
 
 I welcome anyone who wants to contribute to PixelGames! If you'd like to help with development, report bugs, or suggest new features, feel free to create an issue on this repository.
 
-### PixelGames will be updated! Keep an eye out for future updates that will bring even more minigames, a rewarding gameplay experience, and exciting new features!
+### Keep an eye out for future updates that will bring even more minigames, a rewarding gameplay experience, and exciting new features!
 <sub> Author: Wilkozx </sub>
